@@ -2,20 +2,20 @@ package io.nirahtech.librairies.pdf;
 
 import java.util.Objects;
 
-public class Catalog extends PDFObject {
-    private final PDFObject outlines;
-    private final PDFObject pages;
+public final class Catalog extends PDFObject {
+    private final Outlines outlines;
+    private final Pages pages;
 
-    public Catalog(final PDFObject outlines, final PDFObject pages) {
+    Catalog(final Outlines outlines, final Pages pages) {
         this.outlines = outlines;
         this.pages = pages;
     }
 
-    public PDFObject getOutlines() {
-        return outlines;
+    public final Outlines getOutlines() {
+        return this.outlines;
     }
-    public PDFObject getPages() {
-        return pages;
+    public final Pages getPages() {
+        return this.pages;
     }
 
     @Override
@@ -28,16 +28,16 @@ public class Catalog extends PDFObject {
                 .append("/Type /Catalog\n");
 
         if (Objects.nonNull(this.outlines)) {
-            builder.append(String.format("/Outlines %s %s R", this.outlines.getObjectNumber(), 0));
+            builder.append(String.format("/Outlines %s %s %s", this.outlines.getObjectNumber(), 0, REFERENCE));
             builder.append("\n");
         }
 
         if (Objects.nonNull(this.pages)) {
-            builder.append(String.format("/Pages %s %s R", this.pages.getObjectNumber(), 0));
+            builder.append(String.format("/Pages %s %s %s", this.pages.getObjectNumber(), 0, REFERENCE));
             builder.append("\n");
         }
         builder.append(">>\n")
-                .append("endobj\n\n");
+                .append("endobj\n");
         return builder.toString();
     }
 }

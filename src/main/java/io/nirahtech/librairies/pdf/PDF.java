@@ -8,7 +8,7 @@ public final class PDF implements Serializable {
 	private final CrossReferenceTable crossReferenceTable;
 	private final Trailer trailer;
 
-	public PDF(final Header header, final Body body, final CrossReferenceTable crossReferenceTable, final Trailer trailer) {
+	PDF(final Header header, final Body body, final CrossReferenceTable crossReferenceTable, final Trailer trailer) {
 		this.header = header;
 		this.body = body;
 		this.crossReferenceTable = crossReferenceTable;

@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CrossReferenceTable {
+public final class CrossReferenceTable {
     
     private final List<Reference> referencesTable = new ArrayList<>();
 
     private final int positionInOctetFromTheBegining;
 
-    public CrossReferenceTable(int positionInOctetFromTheBegining) {
+    CrossReferenceTable(int positionInOctetFromTheBegining) {
         this.positionInOctetFromTheBegining = positionInOctetFromTheBegining;
     }
 
-    public List<Reference> getReferencesTable() {
+    public final List<Reference> getReferencesTable() {
         return Collections.unmodifiableList(referencesTable);
     }
     

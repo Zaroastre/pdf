@@ -43,7 +43,7 @@ public final class Header implements Serializable {
     private URL source = null;
     private Base64 thumbnail = null;
 
-    public Header() {
+    Header() {
         final UUID uuid = UUID.randomUUID();
         final String formattedUUID = uuid.toString().replace("-", "");
         final String part1 = formattedUUID.substring(0, 16);

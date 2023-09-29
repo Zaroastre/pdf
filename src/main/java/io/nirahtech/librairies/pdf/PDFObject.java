@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 public abstract class PDFObject implements Serializable, Comparable<PDFObject> {
 
+    protected static final String REFERENCE = "R";
     private static int totalCreated = 0;
 
     private final int objectNumber;
-    private final int version;
+    protected final int version;
 
     public static final int getTotalCreated() {
         return totalCreated;
@@ -24,10 +25,10 @@ public abstract class PDFObject implements Serializable, Comparable<PDFObject> {
         return Integer.compare(this.objectNumber, other.getObjectNumber());
     }
 
-    public int getObjectNumber() {
-        return objectNumber;
+    public final int getObjectNumber() {
+        return this.objectNumber;
     }
-    public int getVersion() {
-        return version;
+    public final int getVersion() {
+        return this.version;
     }
 }

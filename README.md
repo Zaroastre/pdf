@@ -6,41 +6,30 @@
 
 ```java
 
-final HtmlBuilder htmlBuilder = new HtmlBuilder();
+final Font titleFont = new Font("Arial");
+    final Color titleFontColor = Color.fromRGB(0, 0, 0);
+    final int titleFontSize = 24;
 
-// Header configuration
-htmlBuilder.title("Demo HTML Document");
-htmlBuilder.charset(StandardCharsets.UTF_8);
-htmlBuilder.metadata("viewport", "width=device-width, initial-scale=1");
-htmlBuilder.metadata("keywords", "HTML, demo");
+    final Font paragraphFont = new Font("Consolas");
+    final Color paragraphFontColor = Color.fromRGB(0, 0, 0);
+    final int paragraphFontSize = 12;
 
-// Body configuration
-final HtmlTag aboutTitle = new HtmlTagBuilder(Tag.H1)
-        .className("title")
-        .innerHtml("About Us")
-        .build();
-
-final HtmlTag contactTitle = new HtmlTagBuilder(Tag.H1)
-        .className("title")
-        .innerHtml("Contact Us")
-        .build();
-
-final HtmlTag aboutSection = new HtmlTagBuilder(Tag.SECTION)
-        .id("about")
-        .child(aboutTitle)
-        .build();
-
-final HtmlTag contactSection = new HtmlTagBuilder(Tag.SECTION)
-        .id("contact")
-        .child(contactTitle)
-        .build();
-
-final HtmlTag main = new HtmlTagBuilder(Tag.MAIN)
-        .child(aboutSection)
-        .child(contactSection)
-        .build();
-
-htmlBuilder.node(main);
-
-final Html document = htmlBuilder.build();
+    // Light and easy PDF Generation
+    final PDF pdf = PDFFactory.A4()
+            .page()
+                .padding(20F)
+                .text("Introduction", titleFont, titleFontSize, titleFontColor, new Position(10, 10))
+                .text("Welcome on this PDF Generator test.", paragraphFont, paragraphFontSize, paragraphFontColor, new Position(10, 100))
+                .and()
+            
+            .page()
+                .padding(20F)
+                .text("About Us", titleFont, titleFontSize, titleFontColor, new Position(10, 10))
+                .text("I'm Nicolas, I'm programming using Java language.", paragraphFont, paragraphFontSize, paragraphFontColor, new Position(10, 100))
+                .and()
+            .page()
+                .padding(20F)
+                .text("Contact Us", titleFont, titleFontSize, titleFontColor, new Position(10, 10))
+                .text("My email is: nicolas.a.metivier@gmail.com", paragraphFont, paragraphFontSize, paragraphFontColor, new Position(10, 100))
+            .build();
 ```

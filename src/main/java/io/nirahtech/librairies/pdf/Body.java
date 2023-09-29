@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Body {
+public final class Body {
 
     private final Set<PDFObject> pdfObjects = new HashSet<>();
 
 
-    public Body(final Catalog catalog) {
+    Body(final Catalog catalog) {
         this.pdfObjects.addAll(List.of(catalog, catalog.getOutlines(), catalog.getPages()));
     }
 

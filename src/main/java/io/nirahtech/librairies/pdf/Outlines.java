@@ -5,16 +5,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class Outlines extends PDFObject {
+public final class Outlines extends PDFObject {
     private final List<Outline> outlines = new ArrayList<>();
 
-    public Outlines(final Outline... outlines) {
+    Outlines(final Outline... outlines) {
         super();
         this.outlines.addAll(List.of(outlines));
         Collections.sort(this.outlines);
     }
 
-    public Collection<Outline> getOutlines() {
+    public final Collection<Outline> getOutlines() {
         return Collections.unmodifiableCollection(this.outlines);
     }
 
@@ -31,16 +31,16 @@ public class Outlines extends PDFObject {
                 .append("/Type /Outlines\n");
 
         if (!this.outlines.isEmpty()) {
-            builder.append(String.format("/First %s %s R", first.getObjectNumber(), first.getVersion()));
+            builder.append(String.format("/First %s %s %s", first.getObjectNumber(), first.getVersion(), REFERENCE));
             builder.append("\n");
-            builder.append(String.format("/Last %s %s R", last.getObjectNumber(), last.getVersion()));
+            builder.append(String.format("/Last %s %s %s", last.getObjectNumber(), last.getVersion(), REFERENCE));
             builder.append("\n");
         }
         builder.append(String.format("/Count %s", this.outlines.size()));
         builder.append("\n");
 
         builder.append(">>\n")
-                .append("endobj\n\n");
+                .append("endobj\n");
                 
         return builder.toString();
     }

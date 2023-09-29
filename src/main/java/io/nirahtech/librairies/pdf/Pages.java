@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Pages extends PDFObject {
+public final class Pages extends PDFObject {
     private final List<Page> pages = new ArrayList<>();
 
-    public Pages(final Page... pages) {
-        this.pages.addAll(List.of(pages));
-        Collections.sort(this.pages);
+    Pages(final Page... pages) {
+        if (Objects.nonNull(pages)) {
+            this.pages.addAll(List.of(pages));
+            Collections.sort(this.pages);
+        }
     }
 
-    public Collection<Page> getPages() {
+    public final Collection<Page> getPages() {
         return Collections.unmodifiableCollection(this.pages);
     }
 
@@ -30,11 +33,11 @@ public class Pages extends PDFObject {
                 .append(String.format("/Count %s", this.pages.size()))
                 .append("\n");
 
-        builder.append(String.format("/Kids [ %s ]", this.pages.stream().map(page -> String.format("%s %s R", page.getObjectNumber(), page.getVersion())).collect(Collectors.joining(" "))));
+        builder.append(String.format("/Kids [ %s ]", this.pages.stream().map(page -> String.format("%s %s %s", page.getObjectNumber(), page.getVersion(), REFERENCE)).collect(Collectors.joining(" "))));
         builder.append("\n");
 
         builder.append(">>\n")
-                .append("endobj\n\n");
+                .append("endobj\n");
         
         this.pages.forEach(page -> {
             builder.append(page.toString()).append("\n");
