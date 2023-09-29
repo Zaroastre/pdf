@@ -1,6 +1,11 @@
 package io.nirahtech.librairies.pdf;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -91,6 +96,38 @@ public final class PDFFactory {
 
     }
 
+    // Table Builder
+    public static final class PDFTableBuilder implements Builder {
+
+        private final PDFPageBuilder master;
+        private final Map<String, List<Object>> table = new HashMap<>();
+
+        private PDFTableBuilder(final PDFPageBuilder master, final String... headers) {
+            this.master = master;
+            if (Objects.nonNull(headers)) {
+                List.of(headers).forEach(header -> {
+                    if (Objects.nonNull(header)) {
+                        this.table.put(header, new ArrayList<>());
+                    }
+                });
+            }
+        }
+
+        public final PDFTableBuilder raw(final Object... cells) {
+            return this;
+        }
+
+        public final PDFPageBuilder and() {
+            return this.master;
+        } 
+
+        @Override
+        public PDF build() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    }
+
     // Page Builder
     public static final class PDFPageBuilder implements Builder {
         private final PDFBuilder master;
@@ -107,6 +144,9 @@ public final class PDFFactory {
             Text text = new Text(value, font, fontSize, color, position);
             this.texts.add(text);
             return this;
+        }
+        public PDFTableBuilder table(final String... headers) {
+            return new PDFTableBuilder(this, headers);
         }
 
         public PDFPageBuilder orientation(PageOrientation orientation) {
