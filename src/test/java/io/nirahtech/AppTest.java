@@ -2,7 +2,6 @@ package io.nirahtech;
 
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -41,7 +40,7 @@ public class AppTest
         final Color titleFontColor = Color.fromRGB(0, 0, 0);
         final int titleFontSize = 24;
 
-        final Font paragraphFont = new Font("Consolas");
+        final Font paragraphFont = new Font("Comic Sans MS");
         final Color paragraphFontColor = Color.fromRGB(0, 0, 0);
         final int paragraphFontSize = 12;
 

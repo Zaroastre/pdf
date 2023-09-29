@@ -47,6 +47,13 @@ public final class Page extends PDFObject {
         }
         builder.append(">>\n")
                 .append("endobj\n");
+
+        if (Objects.nonNull(this.resources)) {
+            this.resources.getFonts().forEach(font -> {
+                builder.append(font.toString()).append("\n");
+            });
+        }
+            
         builder.append(this.contents.toString()).append("\n");
         return builder.toString();
     }

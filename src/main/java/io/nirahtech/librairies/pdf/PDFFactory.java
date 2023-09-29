@@ -80,7 +80,7 @@ public final class PDFFactory {
                     new Pages(
                         this.pages.toArray(new Page[this.pages.size()])
                     ));
-
+            header.setPageCount(this.pages.size());
             return new PDF(
 				header,
 				new Body(catalog),

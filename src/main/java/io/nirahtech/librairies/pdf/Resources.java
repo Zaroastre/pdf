@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Resources extends PDFObject {
     private final List<PDFObject> resources = new ArrayList<>();
@@ -15,6 +16,10 @@ public final class Resources extends PDFObject {
             this.resources.addAll(List.of(resources));
         }
         this.processSet = processSet;
+    }
+
+    public final Collection<Font> getFonts() {
+        return Collections.unmodifiableCollection(this.resources.stream().filter(resource -> resource instanceof Font).map(resource -> (Font) resource).collect(Collectors.toSet()));
     }
 
     public final Collection<PDFObject> getResources() {

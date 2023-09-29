@@ -150,6 +150,10 @@ public final class Header implements Serializable {
         return this.thumbnail;
     }
 
+    final void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
