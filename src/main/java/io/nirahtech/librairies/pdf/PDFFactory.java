@@ -13,37 +13,37 @@ public final class PDFFactory {
     private PDFFactory() { }
 
     public static PDFBuilder A0() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A0);
     }
     public static PDFBuilder A1() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A1);
     }
     public static PDFBuilder A2() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A2);
     }
     public static PDFBuilder A3() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A3);
     }
     public static PDFBuilder A4() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A4);
     }
     public static PDFBuilder A5() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A5);
     }
     public static PDFBuilder A6() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A6);
     }
     public static PDFBuilder A7() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A7);
     }
     public static PDFBuilder A8() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A8);
     }
     public static PDFBuilder A9() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A9);
     }
     public static PDFBuilder A10() {
-        return new PDFBuilder();
+        return new PDFBuilder(PageFormat.A10);
     }
 
 
@@ -52,17 +52,18 @@ public final class PDFFactory {
     // PDF Builder
     public static final class PDFBuilder implements Builder {
         
+        private final PageFormat pageFormat;
         private final ProcessSet processSet = new ProcessSet("PDF", "Text");
         private final Header header = new Header();
         private final Footer footer = new Footer(header);
         private final Set<Page> pages = new HashSet<>();
 
-        private PDFBuilder() {
-
+        private PDFBuilder(PageFormat pageFormat) {
+            this.pageFormat = pageFormat;
         }
 
         public PDFPageBuilder page() {
-            return new PDFPageBuilder(this);
+            return new PDFPageBuilder(this, this.pageFormat);
         }
 
         @Override
@@ -94,9 +95,12 @@ public final class PDFFactory {
     public static final class PDFPageBuilder implements Builder {
         private final PDFBuilder master;
         private final Set<Text> texts = new HashSet<>();
+        private final PageFormat pageFormat;
+        private PageOrientation orientation = PageOrientation.PORTRAIT;
 
-        private PDFPageBuilder(final PDFBuilder master) {
+        private PDFPageBuilder(final PDFBuilder master, final PageFormat pageFormat) {
             this.master = master;
+            this.pageFormat = pageFormat;
         }
 
         public PDFPageBuilder text(final String value, final Font font, final int fontSize, final Color color, final Position position) {
@@ -104,6 +108,12 @@ public final class PDFFactory {
             this.texts.add(text);
             return this;
         }
+
+        public PDFPageBuilder orientation(PageOrientation orientation) {
+            this.orientation = orientation;
+            return this;
+        }
+
         
         public PDFPageBuilder padding(final float margin) {
             return this;
@@ -117,13 +127,24 @@ public final class PDFFactory {
 
         private final void buildPage() {
             final Set<Font> fonts = this.texts.stream().map(text -> text.font()).collect(Collectors.toSet());
+            Position position;
+            switch (this.orientation) {
+                case LANDSCAPE:
+                    position = new Position(this.pageFormat.getHeightInPoints(), this.pageFormat.getWidthInPoints());
+                    break;
+            
+                default:
+                    position = new Position(this.pageFormat.getWidthInPoints(), this.pageFormat.getHeightInPoints());
+                    break;
+            }
             final Page page = new Page(
                 null, 
                 new Resources(
                     master.processSet,
                     fonts.toArray(new Font[fonts.size()])
                 ), 
-                new Contents(this.texts.toArray(new Text[this.texts.size()]))
+                new Contents(this.texts.toArray(new Text[this.texts.size()])),
+                position
             );
             this.master.pages.add(page);
 

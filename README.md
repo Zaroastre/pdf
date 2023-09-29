@@ -23,6 +23,7 @@ final PDF pdf = PDFFactory.A4()
         // Page #1
         .page()
             .padding(20F)
+            .orientation(PageOrientation.LANDSCAPE)
             .text("Introduction", titleFont, titleFontSize, titleFontColor, new Position(10, 10))
             .text("Welcome on this PDF Generator test.", paragraphFont, paragraphFontSize, paragraphFontColor, new Position(10, 100))
             .and()

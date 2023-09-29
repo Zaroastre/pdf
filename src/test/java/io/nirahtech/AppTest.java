@@ -13,6 +13,7 @@ import io.nirahtech.librairies.pdf.Color;
 import io.nirahtech.librairies.pdf.Font;
 import io.nirahtech.librairies.pdf.PDF;
 import io.nirahtech.librairies.pdf.PDFFactory;
+import io.nirahtech.librairies.pdf.PageOrientation;
 import io.nirahtech.librairies.pdf.Position;
 
 /**
@@ -37,7 +38,7 @@ public class AppTest
     public void pdfFactoryTest()
     {
         final Font titleFont = new Font("Arial");
-        final Color titleFontColor = Color.fromRGB(0, 0, 0);
+        final Color titleFontColor = Color.fromRGB(150, 0, 0);
         final int titleFontSize = 24;
 
         final Font paragraphFont = new Font("Comic Sans MS");
@@ -47,6 +48,7 @@ public class AppTest
         // Light and easy PDF Generation
 		final PDF pdf = PDFFactory.A4()
 				.page()
+                    .orientation(PageOrientation.LANDSCAPE)
                     .padding(20F)
 					.text("Introduction", titleFont, titleFontSize, titleFontColor, new Position(10, 10))
 					.text("Welcome on this PDF Generator test.", paragraphFont, paragraphFontSize, paragraphFontColor, new Position(10, 100))

@@ -7,10 +7,13 @@ public final class Page extends PDFObject {
     private final Resources resources;
     private final Contents contents;
 
-    Page(final PDFObject parent, final Resources resources, final Contents contents) {
+    private final Position dimension;
+
+    Page(final PDFObject parent, final Resources resources, final Contents contents, final Position dimension) {
         this.parent = parent;
         this.resources = resources;
         this.contents = contents;
+        this.dimension = dimension;
     }
 
     public final PDFObject getParent() {
@@ -38,7 +41,8 @@ public final class Page extends PDFObject {
         if (Objects.nonNull(this.resources)) {
             builder.append(this.resources.toString());
         }
-        builder.append("/MediaBox [0 0 612.0000 792.0000]\n");
+        builder.append(String.format("/MediaBox [0 0 %s %s]", this.dimension.x(), this.dimension.y()));
+        builder.append("\n");
 
         if (Objects.nonNull(this.contents)) {
             builder.append(
