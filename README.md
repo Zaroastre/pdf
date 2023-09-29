@@ -38,6 +38,11 @@ final PDF pdf = PDFFactory.A4()
         // Page #3
         .page()
             .padding(20F)
+            .orientation(PageOrientation.LANDSCAPE)
+            .table("ID", "Name", "Price")
+                .raw(1, "TV", 700.0F)
+                .raw(5, "XBOX", 450.0F)
+                .and()
             .text("Contact Us", titleFont, titleFontSize, titleFontColor, new Position(10, 10))
             .text("My email is: nicolas.a.metivier@gmail.com", paragraphFont, paragraphFontSize, paragraphFontColor, new Position(10, 100))
 
